@@ -1,0 +1,234 @@
+:root{
+  --clr-primary: rgb(6,50,59);
+  --clr-back : rgb(255,255,255);
+  --clr-parsed : rgb(181, 204, 209);
+  --clr-black : rgb(0,0,0);
+  --clr-p : rgb(0,0,0);
+  --clr-btn : rgb(255,255,255);
+  --date:invert(0%);
+  --drop : rgba(0,0,0,0.3);
+  --clr-scroll : rgb(58,132,141);
+  --clr-terminal:rgb(6,50,59);
+  
+}
+.darkmode{
+  --clr-primary:rgb(160,160,160);
+  --clr-back : rgb(8, 8, 8);
+  --clr-parsed : rgb(43, 42, 42);
+  --clr-p : rgb(201, 201, 201);
+  --clr-btn : rgb(0,0,0);
+  --date:invert(100%);
+  --drop : rgba(0,0,0,1);
+  --clr-scroll : rgb(61,63,68);
+  --clr-terminal:rgb(96, 96, 97);
+}
+.bi-eye{
+  color: var(--clr-eye)!important;
+}
+.bi-terminal{
+  color: var(--clr-terminal)!important;
+}
+.bi-trash{
+  color:rgb(175, 2, 2);
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: var(--date);
+}
+button{
+  background-color: rgba(0,0,0,0);
+  color: var(--clr-p);
+}
+  .button{
+    border-radius: 5px;
+    color: var(--clr-p)!important;
+    background-color: var(--clr-btn)!important;
+    padding: 1px 3px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+  }
+  .main{
+    height: 100vh;
+    width: 80vw;
+  }
+  .left{
+    backdrop-filter: blur(8px);
+    width: 20vw;
+  }
+  .middle{
+    background-color: var(--clr-back);
+    border-radius: 15px;
+    
+  }
+  p{
+    color: var(--clr-p);
+  }
+  .container{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  input ,select{
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        color: var(--clr-p);
+        background-color: var(--clr-back);
+        padding: 1px 3px;
+        box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+  }
+  .brand{
+    color: white;
+  }
+  .one_line{
+    color: rgb(255,255,255);       
+    border-bottom: 2px solid;
+    border-color: rgba(255, 255, 255, 0.3);
+            padding-right: 1%;
+            margin-right: 10%;
+        }   
+  form{
+    padding-left: 5%;
+  }
+  #pseudo_container{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
+  html,body{
+  margin:0;
+  }
+  .bdr{
+    border-bottom: 2px solid;
+    border-color: var(--clr-primary);
+    color: var(--clr-primary);
+    padding: 2px;
+  }
+  h5{
+    font-size: 30px!important;
+    color: var(--clr-p)!important;
+    padding: 2px;
+  }
+  button{
+    border: 0px;
+  }
+  .list-item{
+    border-bottom-left-radius: 10px;
+    border-left: 2px solid var(--clr-primary);
+    border-bottom:2px solid var(--clr-primary);
+  }
+  #container{
+    overflow-y: scroll;
+    padding: 2%;
+    box-shadow:
+             0 0  0 2px var(--clr-back),
+             0.3em 0.3em 1em var(--drop);
+    border-radius: 10px;
+  }
+  #container::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+#container::-webkit-scrollbar-track {
+    border-radius: 100px;
+  }
+  
+#container::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: var(--clr-scroll)!important;
+  }
+  a:link {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+  color: rgb(58,132,141);
+}
+a:hover {
+    text-decoration: none !important;
+    color: rgb(58,132,141)!important;
+}
+.right{
+  width: 30vw;
+  background-color: aqua;
+  margin-right: 5vw;
+
+  height: 83vh;
+  width: 30vw;
+
+}
+aside{
+  float: right;
+  margin-right: 5vw;
+  height: 83vh;
+  width: 30vw;
+  position: absolute;
+  right: 0;
+}
+#file{
+  width: 12vw;
+}
+
+.parsed{
+  background-color: var(--clr-parsed);
+}
+@media screen and (min-width: 1100px) {
+    .left{
+        width: 15vw;
+    }
+  }
+@media screen and (max-width: 1090px) {
+    .left{
+        width: 25vw;
+    }
+  }
+textarea{
+    resize: none;
+}
+.for_ball{
+  background-color: var(--clr-primary)!important;
+}
+.for_icon{
+  color: white;
+  background-color: black!important;
+}
+.checkbox {
+opacity: 0;
+position: absolute;
+}
+.theme{
+bottom: 2%;
+position: absolute;
+margin-left: 8%;
+}
+.label {
+background-color: rgb(252, 252, 252);
+border-radius: 50px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 5px;
+position: relative;
+height: 26px;
+width: 50px;
+transform: scale(1.5);
+}
+
+.label .ball {
+background-color: rgb(6,50,59);
+border-radius: 50%;
+position: absolute;
+top: 2px;
+left: 2px;
+height: 22px;
+width: 22px;
+transform: translateX(0px);
+transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+transform: translateX(24px);
+}

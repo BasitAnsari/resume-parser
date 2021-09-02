@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block style %}
+<style> 
+    table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: center;
+  padding: 8px;
+}
+
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+  </style>
+{% endblock style %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ df|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{{ STATIC_URL }}static/css/home.css">
+<style>
+  :root{
+    --back-img : url("{{ STATIC_URL }}static/image/white.jpg");
+    --clr-back : rgb(255,255,255);
+  }
+  .darkmode{
+    --back-img : url("{{ STATIC_URL }}static/image/black2.jpg");
+    --clr-back : rgb(24,24,24);
+  }
+  body{
+    background-image: var(--back-img);
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    background-color: var(--clr-back)!important;
+  }
+</style>
+{% endblock style %}
+{% block content%}
+  <div id="pseudo_container">
+    <div class="main left ">
+      <button class="btn btn-rounded theme" id="chk">
+        <i class="bi bi-moon" id="moon" style="color: white!important;"></i>
+        <i class="bi bi-brightness-high" id="sun" style="color: white!important;"></i>
+      </button>
+          
+      <div class="row ml-2 mt-3 brand">
+        <h1>resumeparser</h1>
+      </div>
+      <div class="row d-block ml-2 mt-5 brand">
+        <p class="one_line" style="font-size: 23px;color: white;">filter</p>
+      </div>
+      <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+        <p class="mb-1" style="color: white;">Date From:</p>
+        <input type="date" name="date_from" id="date">
+        <p class="mb-1" style="color: white;">Date To:</p>
+        <input type="date" name="date_to" id="date"><br>
+        <button type="submit" value="filter" class="btn btn-rounded p-1 mt-2 button" name="form_type">Filter</button>
+        <button type="submit" value="report" class="btn btn-rounded p-1 mt-2 button" name="form_type">Get Excel</button>
+        <button type="submit" value="download" class="btn btn-rounded p-1 mt-2 button" name="form_type">Download Excel</button>
+      </form>
+      <div class="row d-block ml-2 mt-5 brand">
+        <p class="one_line" style="font-size: 23px;color: white;">Upload Resume</p>
+      </div>
+      <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+        <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" ><br>
+        <button class="btn btn-rounded p-1 button mt-2" type="submit" value="file" name="form_type">Upload</button>
+      </form>
+    </div>
+    <div class="main middle">
+      <div class="row mt-5 " style="margin-left: 7vw;">
+        {% if class == "parsed" %}
+        <h5 class="bdr">Showing Parsed Resumes</h5>
+        {% elif class == "not_parsed" %}
+        <h5 class="bdr">Showing Remaining Resumes</h5>
+        {% else%}
+        <h5 class="bdr">Showing All Resumes</h5>
+        {% endif %}
+      </div>
+      <div class="col mt-3 pt-3 " id="container" style="margin-left: 7vw; height: 70vh;width: 35vw;">
+        {% for resume in resumes %}
+        <div class="row list-item
+        {% if resume.is_parsed == True %}
+          parsed
+        {% endif %}
+        ">
+          <div class="col-8">
+            <a href="{% url 'web-detail' resume.id %}"><p style="font-size: 25px; margin: 0px;">{{ resume.resume }}</p></a>
+          </div>
+          <div class="col-4" style="width: 10vw;">
+            <p style="font-size: 25px; margin: 3px;">  
+              <a class="article-title" href="{% url 'web-parse' resume.id %}"><i class="bi bi-terminal" ></i></a>
+              <a class="article-title" href="{% url 'web-delete' resume.id %}"><i class="bi bi-trash"></i></a>
+            </p>
+          </div>
+          
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <aside>
+      <div class="row mt-5 ml-5">
+        <h5 class="bdr">Insights</h5>
+      </div>
+      <div class="row ml-5 d-block crd px-2" style="margin-top: 10vh;">
+        <h5 class="bdr d-inline">
+          Total Resume Uploaded
+          <button type="submit" form="form" value="all" name="form_type">
+            <i class="bi bi-search" style="font-size: 20px;"></i>
+          </button>
+        </h5>
+        <h5>{{total}}</h5>
+      </div>
+      <div class="row ml-5 d-block crd px-2" >
+        <h5 class="bdr d-inline">
+          Total Resume Parsed
+          <button type="submit" form="form" value="parsed" name="form_type">
+            <i class="bi bi-search" style="font-size: 20px;"></i>
+          </button>
+        </h5>
+        <h5>{{p_total}}</h5>
+      </div>
+      <div class="row ml-5 d-block crd px-2">
+        <h5 class="bdr d-inline">
+          Remaining Resumes
+          <button type="submit" form="form" value="not_parsed" name="form_type">
+            <i class="bi bi-search" style="font-size: 20px;"></i>
+          </button>
+        </h5>
+        <h5>{{n_total}}</h5>
+      </div>
+    </aside>
+  </div>
+  <script src="{{ STATIC_URL }}static/javascript/darkmode.js"></script>
+{% endblock content%}
