@@ -1,32 +1,114 @@
+:root{
+  --clr-background : rgb(255,255,255);
+  --clr-secondary : rgb(58,132,141);
+  --clr-theme : rgb(0,0,0);
+  --clr-textarea : rgb(255,255,255);
+  --box-shadow1 : #D1D9E9;
+  --box-shadow2 : #FFFFFF ;
+  --clr-scroll : rgb(58,132,141);
+  --clr-disabled : rgb(181, 204, 209);
+  --clr-p : rgb(0,0,0);
+  --clr-btn : rgb(255,255,255);
+}
+.darkmode{
+  --clr-background : rgb(35,35,35);
+  --clr-secondary : rgb(120,120,120);
+  --clr-theme : rgb(180,180,180);
+  --clr-textarea : rgb(42,42,42);
+  --box-shadow1 : rgba(44,44,44,0.6);
+  --box-shadow2 : rgb(26,26,26);
+  --clr-scroll : rgb(61,63,68);
+  --clr-disabled : rgb(43, 42, 42);
+  --clr-p : rgb(201, 201, 201);
+  --clr-btn : rgb(0,0,0);
+}
+body{
+  background-color: var(--clr-background)!important;
+  transition: ease .2s;
+}
+.theme{
+  left: 5%;
+  bottom: 5%;
+  position: fixed;
+  background-color: rgba(0,0,0,0);
+  color: var(--clr-theme);
+  }
 textarea {
     -webkit-tap-highlight-color: transparent;
+    color: var(--clr-theme);
     width: 100%;
-    min-height: 8rem;
+    min-height: 4rem;
     padding: 1rem 1.5rem;
     font-size: 1rem;
     line-height: 2rem;
     font-weight: 300;
-    background:#FFFFFF;
+    background:var(--clr-textarea);
     border: none;
     border-radius: 1rem;
     outline: none;
     box-shadow: 
-      18px 18px 30px #D1D9E9, 
-      -18px -18px 30px #FFFFFF;
+      18px 18px 30px var(--box-shadow1), 
+      -18px -18px 30px var(--box-shadow2);
     resize: vertical;
     transition: ease .2s;
-    cursor: pointer;
+    cursor: text;
+  }
+  html *{
+    font-family: var(--font);
   }
   
   textarea::placeholder {
-    color: #9fa8da;
+    color: var(--clr-secondary);
+  }
+  #disabled{
+    background-color: var(--clr-disabled);
+    border: none;
+    color: var(--clr-theme);
+    border-radius: 1rem;
+    outline: none;
+    box-shadow: 
+      18px 18px 30px var(--box-shadow1), 
+      -18px -18px 30px var(--box-shadow2);
+    transition: ease .2s;
+    cursor: pointer;
+    resize: none;
+    cursor: default;
+  }
+  textarea:focus {
+    box-shadow: 
+      inset 18px 18px 30px var(--box-shadow1), 
+      inset -18px -18px 30px var(--box-shadow2);
+  }
+  textarea::-webkit-scrollbar {
+    width: 20px;
   }
   
-  textarea:focus {
-    min-height: 12rem;
-    box-shadow: 
-      inset 18px 18px 30px #D1D9E9, 
-      inset -18px -18px 30px #FFFFFF;
+textarea::-webkit-scrollbar-track {
+    border-radius: 100px;
+
+  }
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: var(--clr-scroll)!important;
+    transition: ease .2s;
+  }
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 100px;
+
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: var(--clr-scroll)!important;
+    transition: ease .2s;
   }
   
   /* Chrome/Opera/Safari */
@@ -49,3 +131,66 @@ textarea {
   textarea:placeholder-shown {
     background: none;
   }
+  a:link {
+    text-decoration: none;
+    color: var(--clr-secondary)!important;
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: var(--clr-secondary);
+  }
+  a:hover {
+      text-decoration: none !important;
+      color: rgb(80,80,80)!important;
+  }
+  label{
+    margin: 5% 0% !important;
+    border-bottom: 1px solid var(--clr-secondary);
+    color: var(--clr-secondary);
+
+  }
+  #home{
+    position: fixed;
+    left: 5%;
+    top: 5%;
+    color: var(--clr-theme);
+  }
+  .container{
+    margin-top: 7vh;
+  }
+  #div_id_name > label{
+    margin-top: 0%!important;
+  }
+  #resume{
+    position: fixed;
+    top:17vh;
+    left:17vw;
+    width: 30vw;
+  }
+  ::-webkit-resizer {
+    display: none;
+    background: rgba(0,0,0,0)!important;
+  }
+  input[type="text"]{
+    color: var(--clr-theme);
+    background:var(--clr-textarea);
+    border: none;
+    width: fit-content;
+    border-radius: 1rem;
+    outline: none;
+    line-height: 2rem;
+    padding: 1rem 1rem;
+    box-shadow: 
+      18px 18px 30px var(--box-shadow1), 
+      -18px -18px 30px var(--box-shadow2);
+    transition: ease .2s;
+  }
+.button{
+    border-radius: 5px;
+    border: thin solid ;
+    color: var(--clr-theme)!important;
+    background-color: var(--clr-disabled)!important;
+    padding: 1px 3px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+}

@@ -9,7 +9,7 @@
   --drop : rgba(0,0,0,0.3);
   --clr-scroll : rgb(58,132,141);
   --clr-terminal:rgb(6,50,59);
-  
+  --font : 'Nunito Sans', sans-serif;
 }
 .darkmode{
   --clr-primary:rgb(160,160,160);
@@ -37,6 +37,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 button{
   background-color: rgba(0,0,0,0);
   color: var(--clr-p);
+  transition: ease .2s;
 }
   .button{
     border-radius: 5px;
@@ -44,6 +45,7 @@ button{
     background-color: var(--clr-btn)!important;
     padding: 1px 3px;
     box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+    transition: ease .2s;
   }
   .main{
     height: 100vh;
@@ -56,10 +58,15 @@ button{
   .middle{
     background-color: var(--clr-back);
     border-radius: 15px;
-    
+    transition: ease .2s;
   }
   p{
     color: var(--clr-p);
+    transition: ease .2s;
+    font-family: var(--font);
+  }
+  html *{
+    font-family: var(--font);
   }
   .container{
     margin: 0 !important;
@@ -72,6 +79,7 @@ button{
         background-color: var(--clr-back);
         padding: 1px 3px;
         box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+        transition: ease .2s;
   }
   .brand{
     color: white;
@@ -100,11 +108,13 @@ button{
     border-color: var(--clr-primary);
     color: var(--clr-primary);
     padding: 2px;
+    transition: ease .2s;
   }
   h5{
     font-size: 30px!important;
     color: var(--clr-p)!important;
     padding: 2px;
+    transition: ease .2s;
   }
   button{
     border: 0px;
@@ -113,6 +123,7 @@ button{
     border-bottom-left-radius: 10px;
     border-left: 2px solid var(--clr-primary);
     border-bottom:2px solid var(--clr-primary);
+    transition: ease .2s;
   }
   #container{
     overflow-y: scroll;
@@ -121,6 +132,7 @@ button{
              0 0  0 2px var(--clr-back),
              0.3em 0.3em 1em var(--drop);
     border-radius: 10px;
+    transition: ease .2s;
   }
   #container::-webkit-scrollbar {
     width: 20px;
@@ -136,6 +148,7 @@ button{
     border-left: 0;
     border-right: 0;
     background-color: var(--clr-scroll)!important;
+    transition: ease .2s;
   }
   a:link {
   text-decoration: none;
@@ -150,15 +163,7 @@ a:hover {
     text-decoration: none !important;
     color: rgb(58,132,141)!important;
 }
-.right{
-  width: 30vw;
-  background-color: aqua;
-  margin-right: 5vw;
 
-  height: 83vh;
-  width: 30vw;
-
-}
 aside{
   float: right;
   margin-right: 5vw;

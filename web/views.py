@@ -141,6 +141,8 @@ def ResumeExcel(request):
     fields.remove('is_parsed')
     fields.remove('timestamp')
     fields.remove('text')
+    fields.remove('id')
+    fields.remove('resume')
     resumes = Resume.objects.filter(is_parsed=True,timestamp__date__lte=date_to,timestamp__date__gte=date_from).values(*fields)
     df = pd.DataFrame(resumes)
     base_dir =settings.MEDIA_ROOT

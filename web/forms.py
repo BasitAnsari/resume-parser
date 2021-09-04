@@ -1,5 +1,5 @@
 from django import forms
-
+from django.forms import Textarea
 from django.apps import apps
 Resume = apps.get_model('api', 'Resume')
 status_choice = (
@@ -33,6 +33,15 @@ class DetailForm(forms.ModelForm):
             'college',
             'experience',
         )
+        widgets = {
+            'phone': Textarea(attrs={'cols': 40, 'rows': 1, 'placeholder':"Not found"}),
+            'skills': Textarea(attrs={'cols': 80, 'rows': 5, 'placeholder':"Not found"}),
+            'designation': Textarea(attrs={'cols': 80, 'rows': 1, 'placeholder':"Not found"}),
+            'degree': Textarea(attrs={'cols': 80, 'rows': 1, 'placeholder':"Not found"}),
+            'college': Textarea(attrs={'cols': 80, 'rows': 3, 'placeholder':"Not found"}),
+            'experience': Textarea(attrs={'cols': 80, 'rows': 5, 'placeholder':"Not found"}),
+        }
+
 class FilterForm(forms.Form):
     status = forms.ChoiceField(choices=status_choice)
     date_from = forms.DateField(widget= forms.DateInput(attrs={'type':'date'}))

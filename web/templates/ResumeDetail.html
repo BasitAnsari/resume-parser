@@ -2,14 +2,19 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block style %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}static/css/detail.css">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 {% endblock style %}
 {% block content %}
+    <button class="btn btn-rounded theme" id="chk">
+    <i class="bi bi-moon" id="moon"></i>
+    <i class="bi bi-brightness-high" id="sun""></i>
+    </button>
+    <a href="{% url 'web-home'%}" id="home"><h3>&lt; Back</h3></a>
     <div class="container">
         <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <textarea class="form-control" rows="25" disabled>{{ data.text }}</textarea>
+            <div class="col" id="bdr">
+                <div class="form-group" id="resume">
+                    <textarea class="form-control" rows="25" disabled id="disabled">{{ data.text }}</textarea>
                 </div>
             </div>
             <div class="col">
@@ -17,9 +22,10 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <br>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn button">Update</button>
                 </form>
             </div>
         </div>
     </div>
+    <script src="{% static 'javascript/darkmode.js' %}"></script>
 {% endblock content %}
