@@ -58,6 +58,7 @@ button{
   .middle{
     background-color: var(--clr-back);
     border-radius: 15px;
+    width: 40vw;
     transition: ease .2s;
   }
   p{
@@ -88,8 +89,6 @@ button{
     color: rgb(255,255,255);       
     border-bottom: 2px solid;
     border-color: rgba(255, 255, 255, 0.3);
-            padding-right: 1%;
-            margin-right: 10%;
         }   
   form{
     padding-left: 5%;
@@ -105,12 +104,14 @@ button{
   }
   .bdr{
     border-bottom: 2px solid;
+    font-weight: normal;
+    font-size: xx-large!important;
     border-color: var(--clr-primary);
     color: var(--clr-primary);
     padding: 2px;
     transition: ease .2s;
   }
-  h5{
+  .num{
     font-size: 30px!important;
     color: var(--clr-p)!important;
     padding: 2px;
@@ -168,7 +169,7 @@ aside{
   float: right;
   margin-right: 5vw;
   height: 83vh;
-  width: 30vw;
+  width: 25vw;
   position: absolute;
   right: 0;
 }

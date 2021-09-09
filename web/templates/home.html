@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}static/css/home.css">
 <style>
   :root{
-    --back-img : url("{{ STATIC_URL }}static/image/white.jpg");
+    --back-img : url("{{ STATIC_URL }}static/image/white.webp");
     --clr-back : rgb(255,255,255);
   }
   .darkmode{
-    --back-img : url("{{ STATIC_URL }}static/image/black2.jpg");
+    --back-img : url("{{ STATIC_URL }}static/image/black2.webp");
     --clr-back : rgb(24,24,24);
   }
   body{
@@ -25,7 +25,7 @@
 {% block content%}
   <div id="pseudo_container">
     <div class="main left ">
-      <button class="btn btn-rounded theme" id="chk">
+      <button class="btn btn-rounded theme" id="chk" aria-label="darkmode">
         <i class="bi bi-moon" id="moon" style="color: white!important;"></i>
         <i class="bi bi-brightness-high" id="sun" style="color: white!important;"></i>
       </button>
@@ -33,35 +33,37 @@
       <div class="row ml-2 mt-3 brand">
         <h1>resumeparser</h1>
       </div>
-      <div class="row d-block ml-2 mt-5 brand">
-        <p class="one_line" style="font-size: 23px;color: white;">filter</p>
+      <div class="row d-block ml-2 mt-5 px-4">
+        <p class="one_line px-3 " style="font-size: 23px;color: white;">filter</p>
       </div>
       <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
-        <p class="mb-1" style="color: white;">Date From:</p>
-        <input type="date" name="date_from" id="date">
-        <p class="mb-1" style="color: white;">Date To:</p>
-        <input type="date" name="date_to" id="date"><br>
+        <label for="date_from" class="mb-1 d-block" style="color: white;">Date From:</label>
+        <input type="date" name="date_from" id="date_from">
+        <label for="date_to" class="mb-1 mt-1 d-block" style="color: white;">Date To:</label>
+        <input type="date" name="date_to" id="date_to"><br>
         <button type="submit" value="filter" class="btn btn-rounded p-1 mt-2 button" name="form_type">Filter</button>
         <button type="submit" value="report" class="btn btn-rounded p-1 mt-2 button" name="form_type">Get Excel</button>
         <button type="submit" value="download" class="btn btn-rounded p-1 mt-2 button" name="form_type">Download Excel</button>
       </form>
-      <div class="row d-block ml-2 mt-5 brand">
+      <div class="row d-block ml-2 mt-5 px-4">
         <p class="one_line" style="font-size: 23px;color: white;">Upload Resume</p>
       </div>
       <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
-        <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" ><br>
+        <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" aria-label="upload"><br>
         <button class="btn btn-rounded p-1 button mt-2" type="submit" value="file" name="form_type">Upload</button>
       </form>
     </div>
     <div class="main middle">
-      <div class="row mt-5 " style="margin-left: 7vw;">
-        {% if class == "parsed" %}
-        <h5 class="bdr">Showing Parsed Resumes</h5>
-        {% elif class == "not_parsed" %}
-        <h5 class="bdr">Showing Remaining Resumes</h5>
-        {% else%}
-        <h5 class="bdr">Showing All Resumes</h5>
-        {% endif %}
+      <div class="row mt-5" style="margin-left: 7vw;">
+        <div class="col">
+          {% if class == "parsed" %}
+          <h1 class="bdr">Showing Parsed Resumes</h1>
+          {% elif class == "not_parsed" %}
+          <h1 class="bdr">Showing Remaining Resumes</h1>
+          {% else%}
+          <h1 class="bdr">Showing All Resumes</h1>
+          {% endif %}
+        </div>
       </div>
       <div class="col mt-3 pt-3 " id="container" style="margin-left: 7vw; height: 70vh;width: 35vw;">
         {% for resume in resumes %}
@@ -75,8 +77,8 @@
           </div>
           <div class="col-4" style="width: 10vw;">
             <p style="font-size: 25px; margin: 3px;">  
-              <a class="article-title" href="{% url 'web-parse' resume.id %}"><i class="bi bi-terminal" ></i></a>
-              <a class="article-title" href="{% url 'web-delete' resume.id %}"><i class="bi bi-trash"></i></a>
+              <a class="article-title" href="{% url 'web-parse' resume.id %}" aria-label="parse"><i class="bi bi-terminal" ></i></a>
+              <a class="article-title" href="{% url 'web-delete' resume.id %}" aria-label="delete"><i class="bi bi-trash"></i></a>
             </p>
           </div>
           
@@ -86,34 +88,34 @@
     </div>
     <aside>
       <div class="row mt-5 ml-5">
-        <h5 class="bdr">Insights</h5>
+        <h1 class="bdr">Insights</h1>
       </div>
       <div class="row ml-5 d-block crd px-2" style="margin-top: 10vh;">
-        <h5 class="bdr d-inline">
+        <h1 class="bdr d-inline">
           Total Resume Uploaded
-          <button type="submit" form="form" value="all" name="form_type">
+          <button type="submit" form="form" value="all" name="form_type" aria-label="see all">
             <i class="bi bi-search" style="font-size: 20px;"></i>
           </button>
-        </h5>
-        <h5>{{total}}</h5>
+        </h1>
+        <h1 class="num mt-2">{{total}}</h1>
       </div>
       <div class="row ml-5 d-block crd px-2" >
-        <h5 class="bdr d-inline">
+        <h1 class="bdr d-inline">
           Total Resume Parsed
-          <button type="submit" form="form" value="parsed" name="form_type">
+          <button type="submit" form="form" value="parsed" name="form_type" aria-label="see parse">
             <i class="bi bi-search" style="font-size: 20px;"></i>
           </button>
-        </h5>
-        <h5>{{p_total}}</h5>
+        </h1>
+        <h1 class="num mt-2">{{p_total}}</h1>
       </div>
       <div class="row ml-5 d-block crd px-2">
-        <h5 class="bdr d-inline">
+        <h1 class="bdr d-inline">
           Remaining Resumes
-          <button type="submit" form="form" value="not_parsed" name="form_type">
+          <button type="submit" form="form" value="not_parsed" name="form_type" aria-label="see not parsed">
             <i class="bi bi-search" style="font-size: 20px;"></i>
           </button>
-        </h5>
-        <h5>{{n_total}}</h5>
+        </h1>
+        <h1 class="num mt-2">{{n_total}}</h1>
       </div>
     </aside>
   </div>
