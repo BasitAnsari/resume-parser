@@ -153,7 +153,7 @@ button{
   }
   a:link {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 a:visited {
@@ -237,4 +237,8 @@ transition: transform 0.2s linear;
 
 .checkbox:checked + .label .ball {
 transform: translateX(24px);
+}
+
+.table>:not(caption)>*>* {
+  background-color: rgba(0,0,0,0)!important;
 }

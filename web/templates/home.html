@@ -65,8 +65,8 @@
           {% endif %}
         </div>
       </div>
-      <div class="col mt-3 pt-3 " id="container" style="margin-left: 7vw; height: 70vh;width: 35vw;">
-        {% for resume in resumes %}
+      <div class="col mt-3 pt-3 " id="container" style="margin-left: 7vw; height: 80vh;width: 70vw;">
+        <!-- {% for resume in resumes %}
         <div class="row list-item
         {% if resume.is_parsed == True %}
           parsed
@@ -83,10 +83,63 @@
           </div>
           
         </div>
-        {% endfor %}
+        {% endfor %} -->
+        <table class="table table-dark table-hover" style="background-color: rgba(0,0,0,0)!important;">
+        <thead>
+          <tr>
+            <form class="form-inline" method="post">
+              {% csrf_token %}
+              <th scope="row">
+              <td>
+                <div class="row">
+                  <input type="text" class="form-control mb-2 mr-sm-2" id="title-search" placeholder="Search Keywords"
+                    name="Search">
+                </div>
+              </td>
+              <td><button type="submit" value="Search" class="btn btn-outline-light mb-2">Search</button></td>
+            </th>
+            </form>
+          </tr>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Designation</th>
+            <th scope="col">Contact Number</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for instance in resumes %}
+          <tr>
+            <th scope="row"><a href="{% url 'web-detail' instance.id %}">{{instance.name}}</a></th>
+            <td><a href="{% url 'web-detail' instance.id %}">{{instance.designation}}</a></td>
+            <td><a href="{% url 'web-detail' instance.id %}">{{instance.phone}}</a></td>
+            <td><a class="article-title" href="{% url 'web-delete' instance.id %}" aria-label="delete"><i class="bi bi-trash"></i></a></td>
+          </tr>
+          {% endfor%}
+        </tbody>
+      </table>
       </div>
-    </div>
-    <aside>
+    </div>{% if resumes.has_other_pages %}
+    <!-- Pagination -->
+    <nav class="my-3 container" style="position: fixed; bottom: -20px; left:22vw;">
+        <ul class="pagination">
+          {% if resumes.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{resumes.previous_page_number}}">Previous</a></li>
+          {% endif %}
+          {% for i in resumes.paginator.page_range %}
+          {% if resumes.number == i %}
+          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+          {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if resumes.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{resumes.next_page_number}}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+    <!-- <aside>
       <div class="row mt-5 ml-5">
         <h1 class="bdr">Insights</h1>
       </div>
@@ -117,7 +170,7 @@
         </h1>
         <h1 class="num mt-2">{{n_total}}</h1>
       </div>
-    </aside>
+    </aside> -->
   </div>
 <script src="{{ STATIC_URL }}static/javascript/darkmode.js"></script>
 {% endblock content%}

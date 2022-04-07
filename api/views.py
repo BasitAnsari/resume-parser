@@ -41,7 +41,9 @@ def ResumeParse(request,pk):
     resumeOBJ = Resume.objects.get(id=pk)
     base_dir =settings.MEDIA_ROOT
     file = base_dir + resumeOBJ.resume.url
+    print(file)
     file = file.replace('/media/media','/media')
+    print(file)
     parsed_data = Parse(file)
     resumeOBJ.text = parsed_data['text']
     resumeOBJ.phone = parsed_data['phone']

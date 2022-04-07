@@ -75,8 +75,16 @@ def home(request):
             files = request.FILES.getlist('resume')
             for file in files:
                 response = requests.post('http://127.0.0.1:8000/api/resume-create/', files={'resume': file})
+            resumes = Resume.objects.filter(is_parsed=False)
+            print("First debug")
+            for resume in resumes:
+                print("second debug")
+                response = requests.put(f'http://127.0.0.1:8000/api/resume-parse/{resume.id}/')
+            print("last debug")
             return redirect('web-home')
-            
+    if "Search" in request.POST:
+        search = request.POST.get('Search')
+        resumes = resumes.filter(text__icontains=search)     
     p = Paginator(resumes, 50)
     page_num = request.GET.get('page', 1)
     try:
@@ -114,7 +122,8 @@ def ResumeWebDetail(request, pk):
 def ResumeParse(request,pk):
     api = "http://127.0.0.1:8000/api/resume-parse/"+str(pk)+"/"
     print(api)
-    data = requests.put(api).json()
+    data = requests.put(api)
+    print(data)
     return redirect('web-detail',pk)
 # upload resume
 
