@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        :root{
+          --back-img : url("{{ STATIC_URL }}static/image/white.webp");
+          --clr-back : rgb(255,255,255);
+        }
+        .darkmode{
+          --back-img : url("{{ STATIC_URL }}static/image/black2.webp");
+          --clr-back : rgb(34,34,34);
+        }
+        body{
+          background-image: var(--back-img);
+          background-repeat: no-repeat;
+          background-size: contain;
+          transition: ease .2s;
+        }
+        body::-webkit-scrollbar {
+            width: 20px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            border-radius: 100px;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            border-radius: 100px;
+            border: 2px solid rgba(0, 0, 0, 0.18);
+            border-left: 0;
+            border-right: 0;
+            background-color: var(--clr-scroll)!important;
+            transition: ease .2s;
+        }
+        #other::-webkit-scrollbar {
+            width: 20px;
+        }
+        
+        #other::-webkit-scrollbar-track {
+            border-radius: 100px;
+        }
+        
+        #other::-webkit-scrollbar-thumb {
+            border-radius: 100px;
+            border: 2px solid rgba(0, 0, 0, 0.18);
+            border-left: 0;
+            border-right: 0;
+            background-color: var(--clr-scroll)!important;
+            transition: ease .2s;
+        }
+        #other{
+            background-color: rgb(34,34,34);
+            box-shadow:
+                    0 0  0 2px var(--clr-back),
+                    0.3em 0.3em 1em var(--drop);
+            border-radius: 10px;
+            transition: ease .2s;
+        }
+      </style>
+{% endblock style %}
+{% block content %}
+    <button class="btn btn-rounded theme" id="chk">
+    <i class="bi bi-moon" id="moon"></i>
+    <i class="bi bi-brightness-high" id="sun""></i>
+    </button>
+    <a href="{% url 'web-home'%}" id="home"><h3>&lt; Back</h3></a>
+    <div class="main middle">
+        <div class="accordion" style="margin-left: 18vw; width: 80vw;">
+            <div class="accordion-item" id="other">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" style="background-color: rgb(34,34,34); color:white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Search Options:
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <form method="post" class="p-0" id="form" action="">
+                        {% csrf_token %}
+                        <div class="col">
+                          <input type="text" name="Search" class="p-2" style="width: 65vw;" placeholder="Search.....">
+                        </div>
+                        <div class="btn-group mt-3" role="group" aria-label="Basic outlined example">
+                          <button type="submit" value="Search_name" name="form_type" class="btn btn-outline-light">Name</button>
+                          <button type="submit" value="Search_designation" name="form_type" class="btn btn-outline-light">Designation</button>
+                          <button type="submit" value="Search_skill" name="form_type" class="btn btn-outline-light">Skills</button>
+                          <button type="submit" value="Search" name="form_type" class="btn btn-outline-light">Search All</button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row mt-4 pt-3 " id="container" style="margin-left: 18vw; width: 80vw; max-height: 48vh;">
+            <table class="table table-dark table-hover" style="background-color: rgba(0,0,0,0)!important;">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for instance in best %}
+              <tr>
+                <th scope="row"><a href="{% url 'web-detail' instance.id %}">{{instance.name}}</a></th>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.designation}}</a></td>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.phone}}</a></td>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.email}}</a></td>
+                <td><a class="article-title" href="{% url 'web-delete' instance.id %}" aria-label="delete"><i class="bi bi-trash"></i></a></td>
+              </tr>
+              {% endfor%}
+            </tbody>
+          </table>
+        </div>
+        <div class="row mt-3" id="other" style="margin-left: 18vw; width: 80vw; overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap;">
+            {% for resume in other %}
+            <div class="card text-white m-3 col-4" id="container" style="max-width: 18rem; display: inline-block; float: none;">
+                <div class="card-header">{{ resume.designation }}</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{resume.name}}</h5>
+                  <button class="btn btn-outline-light"> View </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'javascript/darkmode.js' %}"></script>
+{% endblock content %}

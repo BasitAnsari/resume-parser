@@ -9,5 +9,7 @@ urlpatterns = [
     path('resume/parse/<str:pk>/', views.ResumeParse, name = 'web-parse'),
     path('resume/<str:pk>/delete/', DeleteView.as_view(), name = 'web-delete'),
     path('resume/excel/view/', views.ResumeExcel, name = 'to-excel'),
+    path('resume/search/<str:sr_type>/<str:qr>/', views.ResumeSearch, name = 'web-search'),
+    
     #path('resume/<str:pk>/delete/', views.ResumeWebDelete, name = 'web-delete'),
 ]

@@ -55,12 +55,6 @@ button{
     backdrop-filter: blur(8px);
     width: 20vw;
   }
-  .middle{
-    background-color: var(--clr-back);
-    border-radius: 15px;
-    width: 40vw;
-    transition: ease .2s;
-  }
   p{
     color: var(--clr-p);
     transition: ease .2s;
@@ -128,15 +122,10 @@ button{
   }
   #container{
     overflow-y: scroll;
-    padding: 2%;
-    box-shadow:
-             0 0  0 2px var(--clr-back),
-             0.3em 0.3em 1em var(--drop);
-    border-radius: 10px;
     transition: ease .2s;
   }
   #container::-webkit-scrollbar {
-    width: 20px;
+    width: 10px;
   }
   
 #container::-webkit-scrollbar-track {
@@ -153,25 +142,19 @@ button{
   }
   a:link {
   text-decoration: none;
-  color: white;
+  color: #DFDFDF;
 }
 
 a:visited {
   text-decoration: none;
-  color: rgb(58,132,141);
+  color: #DFDFDF;
 }
 a:hover {
     text-decoration: none !important;
     color: rgb(58,132,141)!important;
 }
-
-aside{
-  float: right;
-  margin-right: 5vw;
-  height: 83vh;
-  width: 25vw;
-  position: absolute;
-  right: 0;
+.page-link{
+  background-color: var(--clr-back)!important;
 }
 #file{
   width: 12vw;
@@ -241,4 +224,17 @@ transform: translateX(24px);
 
 .table>:not(caption)>*>* {
   background-color: rgba(0,0,0,0)!important;
+}
+#left{
+  background-color: #212121;
+  transition: ease .2s;
+}
+
+.left-nav{
+  border-right: 2px solid #4b4b4b;
+}
+
+.top-nav{
+  background-color: #181818;
+  border-bottom: 2px solid #4b4b4b;
 }

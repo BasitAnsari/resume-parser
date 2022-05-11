@@ -10,117 +10,136 @@
   }
   .darkmode{
     --back-img : url("{{ STATIC_URL }}static/image/black2.webp");
-    --clr-back : rgb(24,24,24);
+    --clr-back : rgb(34,34,34);
   }
   body{
-    background-image: var(--back-img);
     background-repeat: no-repeat;
-    background-size: contain;
     overflow: hidden;
-    background-color: var(--clr-back)!important;
+    background-size: contain;
     transition: ease .2s;
   }
+  #other{
+            background-color: #212121;
+            transition: ease .2s;
+            border-bottom: 2px solid #4b4b4b;
+        }
 </style>
 {% endblock style %}
 {% block content%}
-  <div id="pseudo_container">
-    <div class="main left ">
-      <button class="btn btn-rounded theme" id="chk" aria-label="darkmode">
-        <i class="bi bi-moon" id="moon" style="color: white!important;"></i>
-        <i class="bi bi-brightness-high" id="sun" style="color: white!important;"></i>
-      </button>
-          
-      <div class="row ml-2 mt-3 brand">
-        <h1>resumeparser</h1>
-      </div>
-      <div class="row d-block ml-2 mt-5 px-4">
-        <p class="one_line px-3 " style="font-size: 23px;color: white;">filter</p>
-      </div>
-      <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
-        <label for="date_from" class="mb-1 d-block" style="color: white;">Date From:</label>
-        <input type="date" name="date_from" id="date_from">
-        <label for="date_to" class="mb-1 mt-1 d-block" style="color: white;">Date To:</label>
-        <input type="date" name="date_to" id="date_to"><br>
-        <button type="submit" value="filter" class="btn btn-rounded p-1 mt-2 button" name="form_type">Filter</button>
-        <button type="submit" value="report" class="btn btn-rounded p-1 mt-2 button" name="form_type">Get Excel</button>
-        <button type="submit" value="download" class="btn btn-rounded p-1 mt-2 button" name="form_type">Download Excel</button>
-      </form>
-      <div class="row d-block ml-2 mt-5 px-4">
-        <p class="one_line" style="font-size: 23px;color: white;">Upload Resume</p>
-      </div>
-      <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
-        <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" aria-label="upload"><br>
-        <button class="btn btn-rounded p-1 button mt-2" type="submit" value="file" name="form_type">Upload</button>
-      </form>
-    </div>
-    <div class="main middle">
-      <div class="row mt-5" style="margin-left: 7vw;">
-        <div class="col">
-          {% if class == "parsed" %}
-          <h1 class="bdr">Showing Parsed Resumes</h1>
-          {% elif class == "not_parsed" %}
-          <h1 class="bdr">Showing Remaining Resumes</h1>
-          {% else%}
-          <h1 class="bdr">Showing All Resumes</h1>
-          {% endif %}
+<nav class="navbar navbar-dark top-nav">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-3" href="{% url 'web-home'%}">Resume Parser</a>
+  </div>
+</nav>
+    <div class="d-flex justify-content-start">
+      <div class="col-4 mr-3 left-nav p-0" style="max-width: 15vw;">
+        <div class="me-0 pt-3 ps-2" id="left" style="height: 100%;">
+          <div class="row d-block ml-2 mt-5 px-4">
+            <p class="one_line" style="font-size: 23px;color: white;">Filter</p>
+          </div>
+          <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+            <label for="date_from" class="mb-1 d-block" style="color: white;">Date From:</label>
+            <input type="date" name="date_from" id="date_from">
+            <label for="date_to" class="mb-1 mt-1 d-block" style="color: white;">Date To:</label>
+            <input type="date" name="date_to" id="date_to"><br>
+            <button type="submit" value="filter" class="btn btn-rounded p-1 mt-2 button" name="form_type">Filter</button>
+            <button type="submit" value="report" class="btn btn-rounded p-1 mt-2 button" name="form_type">Get Excel</button>
+            <button type="submit" value="download" class="btn btn-rounded p-1 mt-2 button" name="form_type">Download Excel</button>
+          </form>
+          <div class="row d-block ml-2 mt-5 px-4">
+            <p class="one_line" style="font-size: 23px;color: white;">Upload Resume</p>
+          </div>
+          <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+            <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" aria-label="upload"><br>
+            <button class="btn btn-rounded p-1 button mt-2" type="submit" value="file" name="form_type">Upload</button>
+          </form>
         </div>
       </div>
-      <div class="col mt-3 pt-3 " id="container" style="margin-left: 7vw; height: 80vh;width: 70vw;">
-        <!-- {% for resume in resumes %}
-        <div class="row list-item
-        {% if resume.is_parsed == True %}
-          parsed
-        {% endif %}
-        ">
-          <div class="col-8">
-            <a href="{% url 'web-detail' resume.id %}"><p style="font-size: 25px; margin: 0px;">{{ resume.resume }}</p></a>
-          </div>
-          <div class="col-4" style="width: 10vw;">
-            <p style="font-size: 25px; margin: 3px;">  
-              <a class="article-title" href="{% url 'web-parse' resume.id %}" aria-label="parse"><i class="bi bi-terminal" ></i></a>
-              <a class="article-title" href="{% url 'web-delete' resume.id %}" aria-label="delete"><i class="bi bi-trash"></i></a>
-            </p>
-          </div>
-          
-        </div>
-        {% endfor %} -->
-        <table class="table table-dark table-hover" style="background-color: rgba(0,0,0,0)!important;">
-        <thead>
-          <tr>
-            <form class="form-inline" method="post">
-              {% csrf_token %}
-              <th scope="row">
-              <td>
-                <div class="row">
-                  <input type="text" class="form-control mb-2 mr-sm-2" id="title-search" placeholder="Search Keywords"
-                    name="Search">
+      <div class="w-100 d-inline-flex flex-column">
+        <div class="row">
+          <div class="col">
+            <div class="accordion">
+              <div class="accordion-item" id="other">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button acc-btn" style="background-color: #212121; color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Search Options:
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                      <form method="post" class="p-0" id="form" action="">
+                          {% csrf_token %}
+                          <div class="col">
+                            <input type="text" name="Search" class="p-2" style="width: 100%;" placeholder="Search.....">
+                          </div>
+                          <div class="btn-group mt-3" role="group" aria-label="Basic outlined example">
+                            <button type="submit" value="Search_name" name="form_type" class="btn btn-outline-light">Name</button>
+                            <button type="submit" value="Search_designation" name="form_type" class="btn btn-outline-light">Designation</button>
+                            <button type="submit" value="Search_skill" name="form_type" class="btn btn-outline-light">Skills</button>
+                            <button type="submit" value="Search" name="form_type" class="btn btn-outline-light">Search All</button>
+                          </div>
+                        </form>
+                  </div>
                 </div>
-              </td>
-              <td><button type="submit" value="Search" class="btn btn-outline-light mb-2">Search</button></td>
-            </th>
-            </form>
-          </tr>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Designation</th>
-            <th scope="col">Contact Number</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for instance in resumes %}
-          <tr>
-            <th scope="row"><a href="{% url 'web-detail' instance.id %}">{{instance.name}}</a></th>
-            <td><a href="{% url 'web-detail' instance.id %}">{{instance.designation}}</a></td>
-            <td><a href="{% url 'web-detail' instance.id %}">{{instance.phone}}</a></td>
-            <td><a class="article-title" href="{% url 'web-delete' instance.id %}" aria-label="delete"><i class="bi bi-trash"></i></a></td>
-          </tr>
-          {% endfor%}
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if resumes.has_other_pages %}
+        <div class="row">
+          <div class="col">
+            <div id="other">
+              <nav class="container pt-3 ps-3">
+                <ul class="pagination">
+                  {% if resumes.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{resumes.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+                  {% for i in resumes.paginator.page_range %}
+                  {% if resumes.number == i %}
+                  <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                  {% endif %}
+                  {% endfor %}
+                  {% if resumes.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{resumes.next_page_number}}">Next</a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row gx-0">
+          <div class="col" id="container" style="height: 85vh;">
+            <table class="table table-dark table-hover" style="background-color: rgba(0,0,0,0)!important;">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for instance in resumes %}
+              <tr>
+                <th scope="row"><a href="{% url 'web-detail' instance.id %}">{{instance.name}}</a></th>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.designation}}</a></td>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.phone}}</a></td>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.email}}</a></td>
+                <td><a class="article-title" href="{% url 'web-delete' instance.id %}" aria-label="delete"><i class="bi bi-trash"></i></a></td>
+              </tr>
+              {% endfor%}
+            </tbody>
+          </table>
+          </div>
+        </div>
       </div>
-    </div>{% if resumes.has_other_pages %}
-    <!-- Pagination -->
+    </div>
+
+  <!-- <div id="pseudo_container">{% if resumes.has_other_pages %}
     <nav class="my-3 container" style="position: fixed; bottom: -20px; left:22vw;">
         <ul class="pagination">
           {% if resumes.has_previous %}
@@ -139,38 +158,6 @@
         </ul>
       </nav>
     {% endif %}
-    <!-- <aside>
-      <div class="row mt-5 ml-5">
-        <h1 class="bdr">Insights</h1>
-      </div>
-      <div class="row ml-5 d-block crd px-2" style="margin-top: 10vh;">
-        <h1 class="bdr d-inline">
-          Total Resume Uploaded
-          <button type="submit" form="form" value="all" name="form_type" aria-label="see all">
-            <i class="bi bi-search" style="font-size: 20px;"></i>
-          </button>
-        </h1>
-        <h1 class="num mt-2">{{total}}</h1>
-      </div>
-      <div class="row ml-5 d-block crd px-2" >
-        <h1 class="bdr d-inline">
-          Total Resume Parsed
-          <button type="submit" form="form" value="parsed" name="form_type" aria-label="see parse">
-            <i class="bi bi-search" style="font-size: 20px;"></i>
-          </button>
-        </h1>
-        <h1 class="num mt-2">{{p_total}}</h1>
-      </div>
-      <div class="row ml-5 d-block crd px-2">
-        <h1 class="bdr d-inline">
-          Remaining Resumes
-          <button type="submit" form="form" value="not_parsed" name="form_type" aria-label="see not parsed">
-            <i class="bi bi-search" style="font-size: 20px;"></i>
-          </button>
-        </h1>
-        <h1 class="num mt-2">{{n_total}}</h1>
-      </div>
-    </aside> -->
-  </div>
+  </div> -->
 <script src="{{ STATIC_URL }}static/javascript/darkmode.js"></script>
 {% endblock content%}

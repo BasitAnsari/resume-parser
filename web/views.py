@@ -1,4 +1,5 @@
 import json
+from multiprocessing import context
 import requests
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -22,8 +23,9 @@ Resume = apps.get_model('api', 'Resume')
 
 def home(request):
     resumes = Resume.objects.all()
-    p_resume = Resume.objects.filter(is_parsed=True)
-    n_resume = Resume.objects.filter(is_parsed=False)
+    if "Search" in request.POST:
+        search = request.POST.get('Search')
+        resumes = resumes.filter(text__icontains = search) 
     form = FilterForm(request.POST)
     form_type = 'all'
     if request.method == 'POST':
@@ -34,7 +36,6 @@ def home(request):
             start_date = datetime.strptime(date_from, '%Y-%m-%d')
             end_date = datetime.strptime(date_to, '%Y-%m-%d')
             resumes = Resume.objects.filter(timestamp__date__lte=date_to,timestamp__date__gte=date_from)
-            print(resumes)
         elif form_type == "report" :
             date_from= request.POST.get('date_from')
             date_to= request.POST.get('date_to')
@@ -43,6 +44,18 @@ def home(request):
             return redirect('to-excel')
         elif form_type == "all" :
             resumes = Resume.objects.all()
+        elif form_type == "Search_name" :
+            sr_type = "name"
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search)
+        elif form_type == "Search_designation" :
+            sr_type = "designation"
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search)
+        elif form_type == "Search_skill" :
+            sr_type = "skill" 
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search)   
         elif form_type == "parsed" :
             resumes = Resume.objects.filter(is_parsed=True)
         elif form_type == "not_parsed" :
@@ -76,16 +89,10 @@ def home(request):
             for file in files:
                 response = requests.post('http://127.0.0.1:8000/api/resume-create/', files={'resume': file})
             resumes = Resume.objects.filter(is_parsed=False)
-            print("First debug")
             for resume in resumes:
-                print("second debug")
                 response = requests.put(f'http://127.0.0.1:8000/api/resume-parse/{resume.id}/')
-            print("last debug")
-            return redirect('web-home')
-    if "Search" in request.POST:
-        search = request.POST.get('Search')
-        resumes = resumes.filter(text__icontains=search)     
-    p = Paginator(resumes, 50)
+            return redirect('web-home')       
+    p = Paginator(resumes, 40)
     page_num = request.GET.get('page', 1)
     try:
         resumes = p.page(page_num)
@@ -94,9 +101,6 @@ def home(request):
     context = {
         "resumes":resumes,
         "form":form,
-        "total":len(Resume.objects.all()),
-        "p_total":len(p_resume),
-        "n_total":len(n_resume),
         "class": form_type,
     }
     return render(request, 'home.html', context)
@@ -140,6 +144,37 @@ class DeleteView(DeleteView):
     model = Resume
     template_name = 'ResumeDelete.html'
     success_url = '/'
+    
+def ResumeSearch(request,sr_type,qr):
+    query = qr
+    if sr_type == "name":
+        best = Resume.objects.filter(name__icontains=query) 
+    elif sr_type == "designation":
+        best = Resume.objects.filter(designation__icontains=query)
+    elif sr_type == "skill":
+        best = Resume.objects.filter(skills__icontains=query)
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        if form_type == "Search_name" :
+            sr_type = "name"
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search)
+        elif form_type == "Search_designation" :
+            sr_type = "designation"
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search)
+        elif form_type == "Search_skill" :
+            sr_type = "skill" 
+            search = request.POST.get('Search')
+            return redirect('web-search',sr_type,search) 
+    other = Resume.objects.filter(text__icontains=query)
+    other = other.difference(best)
+    print(other)
+    context = {
+        "best" : best,
+        "other" : other
+    }
+    return render(request, "search.html", context)
 
 def ResumeExcel(request):
     date_from= request.session['date_from']
