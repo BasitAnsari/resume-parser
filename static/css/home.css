@@ -123,6 +123,7 @@ button{
   #container{
     overflow-y: scroll;
     transition: ease .2s;
+    border-bottom: 2px solid #4b4b4b;
   }
   #container::-webkit-scrollbar {
     width: 10px;

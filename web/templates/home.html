@@ -34,24 +34,24 @@
     <div class="d-flex justify-content-start">
       <div class="col-4 mr-3 left-nav p-0" style="max-width: 15vw;">
         <div class="me-0 pt-3 ps-2" id="left" style="height: 100%;">
-          <div class="row d-block ml-2 mt-5 px-4">
+          <div class="row d-block mt-3 pe-4 ps-2">
             <p class="one_line" style="font-size: 23px;color: white;">Filter</p>
           </div>
-          <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+          <form action="" class="p-0" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
             <label for="date_from" class="mb-1 d-block" style="color: white;">Date From:</label>
-            <input type="date" name="date_from" id="date_from">
-            <label for="date_to" class="mb-1 mt-1 d-block" style="color: white;">Date To:</label>
-            <input type="date" name="date_to" id="date_to"><br>
-            <button type="submit" value="filter" class="btn btn-rounded p-1 mt-2 button" name="form_type">Filter</button>
-            <button type="submit" value="report" class="btn btn-rounded p-1 mt-2 button" name="form_type">Get Excel</button>
-            <button type="submit" value="download" class="btn btn-rounded p-1 mt-2 button" name="form_type">Download Excel</button>
+            <input class="p-1 mx-2" type="date" name="date_from" id="date_from" style="width: 80%;">
+            <label for="date_to" class="mb-1 mt-1 d-block" style="color: white; ">Date To:</label>
+            <input class="p-1 mx-2" type="date" name="date_to" id="date_to" style="width: 80%;"><br>
+            <button type="submit" value="filter" class="btn btn-outline-light p-1 mt-3 m-2 rounded" style="width: 80%;" name="form_type">Filter</button>
+            <button type="submit" value="report" class="btn btn-outline-light p-1 m-2 rounded" style="width: 80%;" name="form_type">Get Excel</button>
+            <button type="submit" value="download" class="btn btn-outline-light p-1 m-2 rounded" style="width: 80%;" name="form_type">Download Excel</button>
           </form>
-          <div class="row d-block ml-2 mt-5 px-4">
+          <div class="row d-block mt-5 pe-4 ps-2">
             <p class="one_line" style="font-size: 23px;color: white;">Upload Resume</p>
           </div>
-          <form action="" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
-            <input class="p-1" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" aria-label="upload"><br>
-            <button class="btn btn-rounded p-1 button mt-2" type="submit" value="file" name="form_type">Upload</button>
+          <form action="" class="p-0" method="POST" id="form" enctype="multipart/form-data">{% csrf_token %}
+            <input class="p-1 m-2" type="file" name="resume"id="file" multiple accept=".pdf, .txt, .text, .docx" aria-label="upload"><br>
+            <button class="btn btn-outline-light p-1 m-2 rounded mt-2" type="submit" value="file" name="form_type" style="width:85%;">Upload</button>
           </form>
         </div>
       </div>
@@ -70,7 +70,7 @@
                       <form method="post" class="p-0" id="form" action="">
                           {% csrf_token %}
                           <div class="col">
-                            <input type="text" name="Search" class="p-2" style="width: 100%;" placeholder="Search.....">
+                            <input type="text" name="Search" class="p-2" style="width: 100%;" placeholder="Search....." required>
                           </div>
                           <div class="btn-group mt-3" role="group" aria-label="Basic outlined example">
                             <button type="submit" value="Search_name" name="form_type" class="btn btn-outline-light">Name</button>
@@ -138,26 +138,5 @@
         </div>
       </div>
     </div>
-
-  <!-- <div id="pseudo_container">{% if resumes.has_other_pages %}
-    <nav class="my-3 container" style="position: fixed; bottom: -20px; left:22vw;">
-        <ul class="pagination">
-          {% if resumes.has_previous %}
-          <li class="page-item"><a class="page-link" href="?page={{resumes.previous_page_number}}">Previous</a></li>
-          {% endif %}
-          {% for i in resumes.paginator.page_range %}
-          {% if resumes.number == i %}
-          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
-          {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
-          {% endif %}
-          {% endfor %}
-          {% if resumes.has_next %}
-          <li class="page-item"><a class="page-link" href="?page={{resumes.next_page_number}}">Next</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    {% endif %}
-  </div> -->
 <script src="{{ STATIC_URL }}static/javascript/darkmode.js"></script>
 {% endblock content%}

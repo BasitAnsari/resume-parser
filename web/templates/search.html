@@ -17,6 +17,7 @@
           background-repeat: no-repeat;
           background-size: contain;
           transition: ease .2s;
+          overflow: hidden;
         }
         body::-webkit-scrollbar {
             width: 20px;
@@ -51,48 +52,82 @@
             transition: ease .2s;
         }
         #other{
-            background-color: rgb(34,34,34);
-            box-shadow:
-                    0 0  0 2px var(--clr-back),
-                    0.3em 0.3em 1em var(--drop);
-            border-radius: 10px;
+            background-color: #212121;
             transition: ease .2s;
+            border-bottom: 2px solid #4b4b4b;
         }
       </style>
 {% endblock style %}
 {% block content %}
-    <button class="btn btn-rounded theme" id="chk">
-    <i class="bi bi-moon" id="moon"></i>
-    <i class="bi bi-brightness-high" id="sun""></i>
-    </button>
-    <a href="{% url 'web-home'%}" id="home"><h3>&lt; Back</h3></a>
-    <div class="main middle">
-        <div class="accordion" style="margin-left: 18vw; width: 80vw;">
-            <div class="accordion-item" id="other">
-              <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" style="background-color: rgb(34,34,34); color:white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Search Options:
-                </button>
-              </h2>
-              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <form method="post" class="p-0" id="form" action="">
-                        {% csrf_token %}
-                        <div class="col">
-                          <input type="text" name="Search" class="p-2" style="width: 65vw;" placeholder="Search.....">
-                        </div>
-                        <div class="btn-group mt-3" role="group" aria-label="Basic outlined example">
-                          <button type="submit" value="Search_name" name="form_type" class="btn btn-outline-light">Name</button>
-                          <button type="submit" value="Search_designation" name="form_type" class="btn btn-outline-light">Designation</button>
-                          <button type="submit" value="Search_skill" name="form_type" class="btn btn-outline-light">Skills</button>
-                          <button type="submit" value="Search" name="form_type" class="btn btn-outline-light">Search All</button>
-                        </div>
-                      </form>
+<nav class="navbar navbar-dark top-nav">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-3" href="{% url 'web-home'%}">Resume Parser</a>
+  </div>
+</nav>
+    <div class="d-flex justify-content-start">
+      <div class="w-100 d-inline-flex flex-column">
+        <div class="row">
+          <div class="col">
+            <div class="accordion">
+              <div class="accordion-item" id="other">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button acc-btn" style="background-color: #212121; color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Search Options:
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                      <form method="post" class="p-0" id="form" action="">
+                          {% csrf_token %}
+                          <div class="col">
+                            <input type="text" name="Search" class="p-2" style="width: 100%;" placeholder="Search....." required>
+                          </div>
+                          <div class="btn-group mt-3" role="group" aria-label="Basic outlined example">
+                            <button type="submit" value="Search_name" name="form_type" class="btn btn-outline-light">Name</button>
+                            <button type="submit" value="Search_designation" name="form_type" class="btn btn-outline-light">Designation</button>
+                            <button type="submit" value="Search_skill" name="form_type" class="btn btn-outline-light">Skills</button>
+                            <button type="submit" value="Search" name="form_type" class="btn btn-outline-light">Search All</button>
+                          </div>
+                        </form>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
-        <div class="row mt-4 pt-3 " id="container" style="margin-left: 18vw; width: 80vw; max-height: 48vh;">
+        <div class="row">
+          <div class="col" id="other">
+            <p class="one_line m-0 px-4 py-1" style="font-size: 20px;color: white;">Showing Results for {{sr_type}}: {{qr}}</p>
+            
+          </div>
+        </div>
+        {% if resumes.has_other_pages %}
+        <div class="row">
+          <div class="col">
+            <div id="other">
+              <nav class="container pt-3 ps-3">
+                <ul class="pagination">
+                  {% if resumes.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{resumes.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+                  {% for i in resumes.paginator.page_range %}
+                  {% if resumes.number == i %}
+                  <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                  {% endif %}
+                  {% endfor %}
+                  {% if resumes.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{resumes.next_page_number}}">Next</a></li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row gx-0">
+          <div class="col" id="container" style="height: 60vh;">
             <table class="table table-dark table-hover" style="background-color: rgba(0,0,0,0)!important;">
             <thead>
               <tr>
@@ -100,6 +135,7 @@
                 <th scope="col">Designation</th>
                 <th scope="col">Contact Number</th>
                 <th scope="col">Email</th>
+                <th scope="col">Skills</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -110,23 +146,31 @@
                 <td><a href="{% url 'web-detail' instance.id %}">{{instance.designation}}</a></td>
                 <td><a href="{% url 'web-detail' instance.id %}">{{instance.phone}}</a></td>
                 <td><a href="{% url 'web-detail' instance.id %}">{{instance.email}}</a></td>
+                <td><a href="{% url 'web-detail' instance.id %}">{{instance.skills}}</a></td>
                 <td><a class="article-title" href="{% url 'web-delete' instance.id %}" aria-label="delete"><i class="bi bi-trash"></i></a></td>
               </tr>
               {% endfor%}
             </tbody>
           </table>
+          </div>
         </div>
-        <div class="row mt-3" id="other" style="margin-left: 18vw; width: 80vw; overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap;">
-            {% for resume in other %}
-            <div class="card text-white m-3 col-4" id="container" style="max-width: 18rem; display: inline-block; float: none;">
-                <div class="card-header">{{ resume.designation }}</div>
-                <div class="card-body">
-                  <h5 class="card-title">{{resume.name}}</h5>
-                  <button class="btn btn-outline-light"> View </button>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="row">
+          <div class="col" id="other">
+            <p class="one_line m-0 px-4 py-1" style="font-size: 20px;color: white;">View Other Related Resume</p>
+          </div>
         </div>
+        <div class="row" id="other" style="overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap; max-height: 18vh;">
+          {% for resume in other %}
+          <div class="card text-white m-3 col-4" id="container" style="max-width: 18rem; display: inline-block; float: none; background-color: #181818;">
+              <div class="card-header">{{ resume.designation }}</div>
+              <div class="card-body">
+                <h5 class="card-title">{{resume.name}}</h5>
+                <button class="btn btn-outline-light"> View </button>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+      </div>
     </div>
     <script src="{% static 'javascript/darkmode.js' %}"></script>
 {% endblock content %}

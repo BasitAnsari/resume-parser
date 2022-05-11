@@ -169,10 +169,18 @@ def ResumeSearch(request,sr_type,qr):
             return redirect('web-search',sr_type,search) 
     other = Resume.objects.filter(text__icontains=query)
     other = other.difference(best)
+    p = Paginator(best, 40)
+    page_num = request.GET.get('page', 1)
+    try:
+        best = p.page(page_num)
+    except EmptyPage:
+        best = p.page(1)
     print(other)
     context = {
         "best" : best,
-        "other" : other
+        "other" : other,
+        "sr_type": sr_type.capitalize() ,
+        "qr": qr,
     }
     return render(request, "search.html", context)
 
