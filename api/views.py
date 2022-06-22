@@ -16,7 +16,6 @@ from django.conf import settings
 def ResumeList(request):
     resumes = Resume.objects.all()
     serializer = ResumeSerializer(resumes, many= True)
-    print(serializer.data)
     return Response(serializer.data)
 
 @api_view(['GET'])

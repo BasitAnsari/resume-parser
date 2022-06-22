@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.50', '127.0.0.1', 'localhost','192.168.1.11','192.168.1.5']
 
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = "access-control-allow-origin"
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,13 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
     'web.apps.WebConfig',
     'api.apps.ApiConfig',
-    'rest_framework',
     'crispy_forms',
 ]
 
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +58,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'resume_parser.urls'
-
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
